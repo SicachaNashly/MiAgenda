@@ -7,7 +7,9 @@ from datetime import datetime, date
 
 # --- 🔑 Conectar con Google Sheets ---
 SCOPE = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-CREDS = ServiceAccountCredentials.from_json_keyfile_name("credenciales.json", SCOPE)
+# --- Credenciales desde Streamlit Secrets ---
+creds_dict = st.secrets["google_service_account"]
+CREDS = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, SCOPE)
 CLIENT = gspread.authorize(CREDS)
 
 SHEET_NAME = "Tareas"  # 📌 nombre de tu hoja
@@ -217,3 +219,4 @@ def mostrar_notificaciones(df):
                     """,
                     unsafe_allow_html=True
                 )
+
